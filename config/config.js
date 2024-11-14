@@ -1,10 +1,9 @@
 const admin = require('firebase-admin');
-import serviceAccount from './chatdelvideo-firebase-adminsdk-uk3ux-0ba04d2b12.json' with {type:'json'};
+const serviceAccount = require('./chatdelvideo-firebase-adminsdk-uk3ux-0ba04d2b12.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-})
-
+});
 
 const db = admin.firestore();
 
