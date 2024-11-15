@@ -6,11 +6,11 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
+const secret = process.env.SECRET_KEY;
 
 const config = {
-    db,
-    secret: process.env.SECRET_KEY,
     port: process.env.PORT || 3000
 };
 
+export { db, secret };
 export default config;
