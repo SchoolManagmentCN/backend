@@ -22,4 +22,4 @@ const studentModel = {
   },
 }; 
 
-module.exports = studentModel;
+export default studentModel;

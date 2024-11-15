@@ -1,5 +1,5 @@
-const admin = require('firebase-admin');
-const serviceAccount = require('./chatdelvideo-firebase-adminsdk-uk3ux-0ba04d2b12.json');
+import admin from 'firebase-admin';
+import serviceAccount from './chatdelvideo-firebase-adminsdk-uk3ux-0ba04d2b12.json' assert { type: 'json' };
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -7,8 +7,10 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-module.exports = {
+const config = {
     db,
     secret: process.env.SECRET_KEY,
     port: process.env.PORT || 3000
 };
+
+export default config;

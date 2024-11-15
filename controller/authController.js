@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { db, secret } from '../config/config';
+import config from '../config/config.js';
+
+const { db, secret } = config;
 
 export const login = async (req, res) => {
   const { username, password } = req.body;

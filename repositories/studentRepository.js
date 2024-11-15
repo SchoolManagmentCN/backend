@@ -1,19 +1,18 @@
-import studentModel from '../models/studentModel';
-
+import studentModel from '../models/studentModel.js';
 
 const studentRepository = {
-    getStudentById: async (id) => {
-      await studentModel.getStudentById(id);
-    },
-    createStudent : async (studentData) => {
-        await studentModel.createStudent(student);
-    },
-    updateStudent: async (studentData) => {
-        await studentModel.updateStudent(student);
-    },
-    deleteStudent: async (id) => {
-        await studentModel.deleteStudent(id);
-    },
-}
+  getStudentById: async (id) => {
+    return await studentModel.getStudentById(id);
+  },
+  createStudent: async (studentData) => {
+    return await studentModel.createStudent(studentData);
+  },
+  updateStudent: async (studentData) => {
+    return await studentModel.updateStudent(studentData);
+  },
+  deleteStudent: async (id) => {
+    await studentModel.deleteStudent(id);
+  },
+};
 
 export default studentRepository;
