@@ -1,14 +1,19 @@
-const studentModel = require('../models/studentModel');
+import studentModel from '../models/studentModel';
 
-const findStudentById = async (id) => {
-  return await studentModel.getStudentById(id);
-};
 
-const createStudent = async (studentData) => {
-  return await studentModel.createStudent(studentData);
-};
+const studentRepository = {
+    getStudentById: async (id) => {
+      await studentModel.getStudentById(id);
+    },
+    createStudent : async (studentData) => {
+        await studentModel.createStudent(student);
+    },
+    updateStudent: async (studentData) => {
+        await studentModel.updateStudent(student);
+    },
+    deleteStudent: async (id) => {
+        await studentModel.deleteStudent(id);
+    },
+}
 
-module.exports = {
-  findStudentById,
-  createStudent,
-};
+export default studentRepository;

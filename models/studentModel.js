@@ -11,6 +11,15 @@ const studentModel = {
     await studentRef.set(studentData);
     return studentData;
   },
-};
+  updateStudent: async (studentData) => {
+      const studentRef = db.collection('students').doc(studentData.id);
+      await studentRef.update(studentData);
+      return studentData;
+  },
+  deleteStudent: async (id) => {
+      const studentRef = db.collection('students').doc(id);
+      await studentRef.delete();
+  },
+}; 
 
 module.exports = studentModel;
