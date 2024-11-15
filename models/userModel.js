@@ -13,4 +13,4 @@ const userModel = {
   },
 };
 
-module.exports = userModel;
+export default userModel;

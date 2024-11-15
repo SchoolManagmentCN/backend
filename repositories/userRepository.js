@@ -1,15 +1,13 @@
-const User = require('../models/userModel');
+import IUser from '../interface/IUser';
+import userModel from '../models/userModel';
 
 const findUserByUsername = async (username) => {
-  return await User.findOne({ username });
+  return await userModel.getUserByUsername(username);
 };
 
 const createUser = async (userData) => {
-  const user = new User(userData);
-  return await user.save();
+  const user = new IUser(userData.id, userData.username, userData.password, userData.email);
+  return await userModel.createUser(user);
 };
 
-module.exports = {
-  findUserByUsername,
-  createUser
-};
+export { findUserByUsername, createUser };
