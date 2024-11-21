@@ -11,6 +11,16 @@ const userModel = {
     await userRef.set(userData);
     return userData;
   },
+  getUserByUsername(username) {
+    const userRef = db.collection('users').doc(username);
+    return userRef.get().then((doc) => {
+      if (doc.exists) {
+        return doc.data();
+      } else {
+        return null;
+      }
+    });
+  }
 };
 
 export default userModel;

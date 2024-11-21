@@ -1,8 +1,7 @@
+
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import config from '../config/config.js';
-
-const { db, secret } = config;
+import { db, secret } from '../config/config.js';
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -28,7 +27,7 @@ export const register = async (req, res) => {
 
   await db.collection('users').doc(username).set({
     username,
-    password: hashedPassword
+    password: hashedPassword,
   });
 
   res.send('User registered successfully');
