@@ -1,15 +1,10 @@
 import express from 'express';
-import { login, register } from './controller/authController.js';
-import { authenticate } from './middleware/authMiddleware.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
-const router = express.Router();
-
-router.post('/login', login);
-router.post('/register', authenticate, register);
 
 app.use(express.json());
-app.use('/api', router);
+app.use('/api', authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
