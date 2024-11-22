@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use('/api', authRoutes);
 
-const PORT = process.env.PORT || 8181;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
