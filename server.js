@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 app.use('/api', authRoutes);
 
+//changed port
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
