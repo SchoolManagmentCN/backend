@@ -29,7 +29,7 @@ try {
 }
 
 // Load secret key from environment variables
-const secret = process.env.SECRET_KEY || 'default_secret';
+const secret = process.env.SECRET_KEY || 'secret';
 
 // Configuration object
 const config = {
