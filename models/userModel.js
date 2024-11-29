@@ -1,4 +1,4 @@
-import { db } from '../config/config';
+import { db } from '../config/config.js';
 
 const userModel = {
   getUserById: async (id) => {

@@ -1,5 +1,5 @@
-import IUser from '../interface/IUser';
-import userModel from '../models/userModel';
+import IUser from '../interface/IUser.js';
+import userModel from '../models/userModel.js';
 
 const findUserByUsername = async (username) => {
   return await userModel.getUserByUsername(username);

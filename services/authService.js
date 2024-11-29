@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { secret } from '../config/config';
-import { findUserByUsername, createUser } from '../repositories/userRepository';
+import { secret } from '../config/config.js';
+import { findUserByUsername, createUser } from '../repositories/userRepository.js';
 
 const login = async (username, password) => {
   if (!username || !password) {

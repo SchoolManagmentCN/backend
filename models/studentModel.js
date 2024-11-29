@@ -1,4 +1,4 @@
-import {db} from "../config/config";
+import { db } from '../config/config.js';
 
 const studentModel = {
   getStudentById: async (id) => {
@@ -12,14 +12,14 @@ const studentModel = {
     return studentData;
   },
   updateStudent: async (studentData) => {
-      const studentRef = db.collection('students').doc(studentData.id);
-      await studentRef.update(studentData);
-      return studentData;
+    const studentRef = db.collection('students').doc(studentData.id);
+    await studentRef.update(studentData);
+    return studentData;
   },
   deleteStudent: async (id) => {
-      const studentRef = db.collection('students').doc(id);
-      await studentRef.delete();
+    const studentRef = db.collection('students').doc(id);
+    await studentRef.delete();
   },
-}; 
+};
 
 export default studentModel;
