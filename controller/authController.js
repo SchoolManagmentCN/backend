@@ -1,34 +1,45 @@
-
+import { login as loginService, register as registerService } from '../services/authService.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { db, secret } from '../config/config.js';
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
-  const userRef = db.collection('users').doc(username);
-  const userDoc = await userRef.get();
-
-  if (!userDoc.exists) {
-    return res.status(400).send('Username or password is incorrect');
+  try {
+    const { token } = await loginService(username, password);
+    res.header('Authorization', token).send(token);
+  } catch (error) {
+    res.status(400).send(error.message);
   }
-
-  const user = userDoc.data();
-  const validPass = await bcrypt.compare(password, user.password);
-  if (!validPass) return res.status(400).send('Invalid password');
-
-  const token = jwt.sign({ _id: user.username }, secret);
-  res.header('Authorization', token).send(token);
 };
 
 export const register = async (req, res) => {
   const { username, password } = req.body;
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+  try {
+    await registerService(username, password);
+    res.send('User registered successfully');
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
 
-  await db.collection('users').doc(username).set({
-    username,
-    password: hashedPassword,
-  });
+export const logout = (req, res) => {
+  res.header('Authorization', '').send('Logged out successfully');
+};
 
-  res.send('User registered successfully');
+export const getUser = async (req, res) => {
+  const { username } = req.query;
+
+  if (!username) {
+    return res.status(400).send('Username is required');
+  }
+
+  const userRef = db.collection('users').doc(username);
+  const userDoc = await userRef.get();
+
+  if (!userDoc.exists) {
+    return res.status(404).send('User not found');
+  }
+
+  res.send(userDoc.data());
 };
