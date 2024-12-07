@@ -1,6 +1,8 @@
-import {createStudent, deleteStudent, getStudentById, updateStudent} from '../services/studentService.js';
-import {createParent} from "../services/parentService.js";
-import {uploadImageToAzure} from '../services/azureService.js';
+import { v4 as uuidv4 } from 'uuid';
+import { createStudent, deleteStudent, getStudentById, updateStudent } from '../services/studentService.js';
+import { createParent } from '../services/parentService.js';
+import { uploadImageToAzure } from '../services/azureService.js';
+import { db } from '../config/config.js';
 
 export const getStudent = async (req, res) => {
   const { id } = req.params;
@@ -18,21 +20,30 @@ export const addStudent = async (req, res) => {
   const parentImage = req.files.parentImage;
 
   try {
-    if (studentImage) {
-      studentData.profileImageUrl = await uploadImageToAzure(studentImage);
-    }
+    await db.runTransaction(async (transaction) => {
+      if (studentImage) {
+        studentData.profileImageUrl = await uploadImageToAzure(studentImage);
+      }
 
-    if (parentImage) {
-      parentData.profileImageUrl = await uploadImageToAzure(parentImage);
-    }
+      if (parentImage) {
+        parentData.profileImageUrl = await uploadImageToAzure(parentImage);
+      }
 
-    const newParent = await createParent(parentData);
-    studentData.parentId = newParent.id;
+      // Create parent and get the new parent's ID
+      const newParentRef = db.collection('parents').doc();
+      parentData.id = newParentRef.id;
+      transaction.set(newParentRef, parentData);
 
-    const newStudent = await createStudent(studentData);
-    res.status(201).json({ student: newStudent, parent: newParent });
+      // Create student with the parent's ID
+      const newStudentRef = db.collection('students').doc();
+      studentData.id = uuidv4(); // Generate a unique ID for the student
+      studentData.parentId = newParentRef.id;
+      transaction.set(newStudentRef, studentData);
+    });
+
+    res.status(201).json({ message: 'Student and parent created successfully' });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send(`Error adding student and parent: ${error.message}`);
   }
 };
 

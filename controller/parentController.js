@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { getParentById, createParent, updateParent, deleteParent } from '../services/parentService.js';
 
 export const getParent = async (req, res) => {
@@ -11,6 +12,7 @@ export const getParent = async (req, res) => {
 
 export const addParent = async (req, res) => {
   const parentData = req.body;
+  parentData.id = uuidv4(); // Generar un ID único para el padre
   const newParent = await createParent(parentData);
   res.status(201).json(newParent);
 };

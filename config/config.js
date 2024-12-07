@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Load the service account key
-const serviceAccountPath = join(__dirname, './smbackend-b1502-firebase-adminsdk-qn1y9-76d72606ab.json');
+const serviceAccountPath = join(__dirname, './smbackend-b1502-firebase-adminsdk-qn1y9-cf9b53f985.json');
 let serviceAccount;
 try {
     serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8'));

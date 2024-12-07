@@ -1,7 +1,8 @@
 class IStudent
 {
-    constructor(name, gender, fatherName, motherName, dateOfBirth, Religion, fatherOccupation, email, admissionDate, classes)
+    constructor(id, name, gender, fatherName, motherName, dateOfBirth, Religion, fatherOccupation, email, admissionDate, classes)
     {
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.fatherName = fatherName;
