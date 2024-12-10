@@ -7,6 +7,8 @@ import studentRoutes from './routes/studentRoutes.js';
 import parentRoutes from './routes/parentRoutes.js';
 import teacherRoutes from "./routes/teacherRoutes.js";
 import dotenv from 'dotenv';
+import subjectRoutes from "./routes/subjectRoutes.js";
+import expenseRoutes from "./routes/expenseRoutes.js";
 
 dotenv.config();
 // Configuración de rutas absolutas
@@ -34,11 +36,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'Backend is running' });
 });
 
-// Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/parents', parentRoutes);
 app.use('/api/teachers', teacherRoutes);
+app.use('/api/subjects', subjectRoutes);
+app.use('/api/expenses', expenseRoutes);
 
 // Manejo de errores global
 app.use((err, req, res, next) => {

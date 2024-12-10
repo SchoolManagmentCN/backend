@@ -4,7 +4,21 @@ import { getStudent, addStudent, editStudent, removeStudent, getStudents } from 
 import { authenticate } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
-const upload = multer(); // Configure multer as needed
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB límite
+    }
+});
+
+router.post('/',
+    upload.fields([
+        { name: 'studentImage', maxCount: 1 },
+        { name: 'parentImage', maxCount: 1 }
+    ]),
+    addStudent
+);
 
 router.get('/:id', getStudent);
 router.post('/', upload.fields([{ name: 'studentImage' }, { name: 'parentImage' }]), addStudent);

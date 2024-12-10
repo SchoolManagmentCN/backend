@@ -12,38 +12,78 @@ export const getStudent = async (req, res) => {
   }
   res.json(student);
 };
-
 export const addStudent = async (req, res) => {
-  const studentData = req.body.student;
-  const parentData = req.body.parent;
-  const studentImage = req.files.studentImage; // Assuming you're using multer for file uploads
-  const parentImage = req.files.parentImage;
-
   try {
+    console.log('Request body:', req.body);
+    console.log('Files received:', req.files);
+
+    // Objeto estudiante con valores por defecto para evitar undefined
+    const studentData = {
+      name: req.body.student.name || '',
+      gender: req.body.student.gender || '',
+      dateOfBirth: req.body.student.dateOfBirth || '',
+      religion: req.body.student.Religion || '',
+      admissionDate: req.body.student.admissionDate || '',
+      classes: req.body.student.classes || '',
+      fatherName: req.body.student.fatherName || '',
+      motherName: req.body.student.motherName || '',
+      email: req.body.student.email || '',
+      createdAt: new Date().toISOString()
+    };
+
+    // Objeto padre con valores por defecto para evitar undefined
+    const parentData = {
+      name: req.body.parent.name || '',
+      gender: req.body.parent.gender === 'undefined' ? '' : (req.body.parent.gender || ''),
+      phone: req.body.parent.phone || '',
+      religion: req.body.parent.religion || '',
+      occupation: req.body.parent.occupation || '',
+      email: req.body.parent.email || '',
+      address: req.body.parent.address || '',
+      createdAt: new Date().toISOString()
+    };
+
+    // Subir imágenes si existen
+    if (req.files?.studentImage?.[0]) {
+      const studentImageUrl = await uploadImageToAzure(req.files.studentImage[0]);
+      studentData.profileImageUrl = studentImageUrl;
+    }
+
+    if (req.files?.parentImage?.[0]) {
+      const parentImageUrl = await uploadImageToAzure(req.files.parentImage[0]);
+      parentData.profileImageUrl = parentImageUrl;
+    }
+
+    // Crear registros en Firebase usando una transacción
     await db.runTransaction(async (transaction) => {
-      if (studentImage) {
-        studentData.profileImageUrl = await uploadImageToAzure(studentImage);
-      }
-
-      if (parentImage) {
-        parentData.profileImageUrl = await uploadImageToAzure(parentImage);
-      }
-
-      // Create parent and get the new parent's ID
+      // Primero crear el padre
       const newParentRef = db.collection('parents').doc();
-      parentData.id = newParentRef.id;
-      transaction.set(newParentRef, parentData);
+      const parentId = newParentRef.id;
+      parentData.id = parentId;
 
-      // Create student with the parent's ID
+      // Luego crear el estudiante
       const newStudentRef = db.collection('students').doc();
-      studentData.id = uuidv4(); // Generate a unique ID for the student
-      studentData.parentId = newParentRef.id;
+      const studentId = newStudentRef.id;
+      studentData.id = studentId;
+      studentData.parentId = parentId;
+
+      // Ejecutar la transacción
+      transaction.set(newParentRef, parentData);
       transaction.set(newStudentRef, studentData);
     });
 
-    res.status(201).json({ message: 'Student and parent created successfully' });
+    res.status(201).json({
+      message: 'Student and parent created successfully',
+      student: studentData,
+      parent: parentData
+    });
+
   } catch (error) {
-    res.status(400).send(`Error adding student and parent: ${error.message}`);
+    console.error('Error in addStudent:', error);
+    res.status(500).json({
+      message: 'Error adding student and parent',
+      error: error.message
+    });
   }
 };
 

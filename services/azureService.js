@@ -1,4 +1,5 @@
 import { BlobServiceClient } from '@azure/storage-blob';
+import { v4 as uuidv4 } from 'uuid';  // Añade esta línea
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,16 +11,21 @@ if (!AZURE_STORAGE_CONNECTION_STRING) {
 }
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
-const containerName = 'profile-images';
+const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME || 'profile-images'; // Usa la variable de entorno
 const containerClient = blobServiceClient.getContainerClient(containerName);
 
 export const uploadImageToAzure = async (file) => {
-    const blobName = uuidv4() + '-' + file.originalname;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    try {
+        const blobName = `${uuidv4()}-${file.originalname}`;
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-    await blockBlobClient.uploadData(file.buffer, {
-        blobHTTPHeaders: { blobContentType: file.mimetype },
-    });
+        await blockBlobClient.uploadData(file.buffer, {
+            blobHTTPHeaders: { blobContentType: file.mimetype },
+        });
 
-    return blockBlobClient.url;
+        return blockBlobClient.url;
+    } catch (error) {
+        console.error('Error uploading to Azure:', error);
+        throw error;
+    }
 };
