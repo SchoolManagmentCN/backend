@@ -6,7 +6,9 @@ import authRoutes from './routes/authRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
 import parentRoutes from './routes/parentRoutes.js';
 import teacherRoutes from "./routes/teacherRoutes.js";
+import dotenv from 'dotenv';
 
+dotenv.config();
 // Configuración de rutas absolutas
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
