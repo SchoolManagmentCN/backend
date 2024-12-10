@@ -6,11 +6,11 @@ import parentRoutes from './routes/parentRoutes.js';
 import teacherRoutes from "./routes/teacherRoutes.js";
 
 const app = express();
-const port = process.env.PORT || 8181;
+const port = process.env.PORT || 8180;
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: '*',
+  origin: 'http://localhost:3000', // Allow only the specified address
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
 }));
