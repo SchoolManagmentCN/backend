@@ -1,2 +1,2 @@
 [config]
-command = npm install && npm start
+SCM_DO_BUILD_DURING_DEPLOYMENT=true

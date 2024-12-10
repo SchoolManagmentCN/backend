@@ -33,6 +33,7 @@ jobs:
           cp -r controller deployment/
           cp -r interface deployment/
           cp -r middleware deployment/
+          cp -r repositories deployment/
           cp -r models deployment/
           cp -r routes deployment/
           cp -r services deployment/
