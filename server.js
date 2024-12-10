@@ -11,23 +11,25 @@ import subjectRoutes from "./routes/subjectRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
 
 dotenv.config();
-// Configuración de rutas absolutas
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-// Configuración de CORS más flexible para producción
 app.use(cors({
-  origin: ['http://localhost:3000', process.env.FRONTEND_URL || '*'], // Permite múltiples orígenes
+  origin: [
+    'http://localhost:3000',
+    'https://victorious-sky-0a112240f.5.azurestaticapps.net',
+    'https://backendappsmcn-dwgwdpe6h2d2dmee.canadacentral-01.azurewebsites.net'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
 
-// Ruta de prueba para health check
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'Server is running' });
 });
@@ -43,7 +45,6 @@ app.use('/api/teachers', teacherRoutes);
 app.use('/api/subjects', subjectRoutes);
 app.use('/api/expenses', expenseRoutes);
 
-// Manejo de errores global
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
@@ -52,7 +53,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Manejo de rutas no encontradas
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
@@ -62,7 +62,6 @@ app.listen(port, () => {
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
-// Manejo de errores no capturados
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
 });
