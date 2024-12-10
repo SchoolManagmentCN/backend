@@ -39,6 +39,7 @@ jobs:
           cp -r services deployment/
           cp .env deployment/ || true  # Copiar .env si existe
           cp initFirestore.js deployment/
+          cp -r ecosystem.config.js deployment/
           
           # Instalar dependencias de producción
           cd deployment
