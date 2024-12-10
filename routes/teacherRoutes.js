@@ -1,20 +1,20 @@
-// routes/teacherRoutes.js
 import express from 'express';
-import {
-    getTeacher,
-    addTeacher,
-    editTeacher,
-    removeTeacher,
-    getTeachers
-} from '../controller/teacherController.js';
-import { authenticate } from '../middleware/authMiddleware.js';
+import multer from 'multer';
+import { getTeacher, addTeacher, editTeacher, removeTeacher, getTeachers } from '../controller/teacherController.js';
 
 const router = express.Router();
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB límite
+  }
+});
 
 router.get('/:id', getTeacher);
 router.get('/', getTeachers);
-router.post('/', addTeacher);
-router.put('/', editTeacher);
+router.post('/', upload.single('teacherImage'), addTeacher);
+router.put('/:id', upload.single('teacherImage'), editTeacher);
 router.delete('/:id', removeTeacher);
 
 export default router;

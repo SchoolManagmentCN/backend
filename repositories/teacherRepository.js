@@ -14,7 +14,7 @@ const teacherRepository = {
     await teacherModel.deleteTeacher(id);
   },
   getAllTeachers: async () => {
-      return await teacherModel.getAllTeachers();
+    return await teacherModel.getAllTeachers();
   }
 };
 

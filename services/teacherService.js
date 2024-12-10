@@ -17,7 +17,7 @@ const deleteTeacher = async (id) => {
 };
 
 const getAllTeachers = async () => {
-  await teacherRepository.getAllTeachers();
-}
+  return await teacherRepository.getAllTeachers(); // Asegúrate de retornar los datos aquí
+};
 
 export { getTeacherById, createTeacher, updateTeacher, deleteTeacher, getAllTeachers };

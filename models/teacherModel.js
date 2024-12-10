@@ -21,13 +21,13 @@ const teacherModel = {
     await teacherRef.delete();
   },
   getAllTeachers: async () => {
-      const teacherRef = db.collection('teachers');
-      const snapshot = await teacherRef.get();
-      const teachers = [];
-      snapshot.forEach(doc => {
+    const teacherRef = db.collection('teachers');
+    const snapshot = await teacherRef.get();
+    const teachers = [];
+    snapshot.forEach(doc => {
       teachers.push(doc.data());
-      });
-      return teachers;
+    });
+    return teachers; // Asegúrate de retornar los datos aquí
   }
 };
 
