@@ -20,6 +20,15 @@ const teacherModel = {
     const teacherRef = db.collection('teachers').doc(id);
     await teacherRef.delete();
   },
+  getAllTeachers: async () => {
+      const teacherRef = db.collection('teachers');
+      const snapshot = await teacherRef.get();
+      const teachers = [];
+      snapshot.forEach(doc => {
+      teachers.push(doc.data());
+      });
+      return teachers;
+  }
 };
 
 export default teacherModel;

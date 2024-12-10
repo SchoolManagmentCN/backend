@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { createStudent, deleteStudent, getStudentById, updateStudent } from '../services/studentService.js';
+import { createStudent, deleteStudent, getStudentById, updateStudent, getAllStudents } from '../services/studentService.js';
 import { createParent } from '../services/parentService.js';
 import { uploadImageToAzure } from '../services/azureService.js';
 import { db } from '../config/config.js';
@@ -64,3 +64,8 @@ export const removeStudent = async (req, res) => {
   await deleteStudent(id);
   res.status(204).send();
 };
+
+export const getStudents = async (req, res) => {
+    const students = await getAllStudents();
+    res.json(students);
+}

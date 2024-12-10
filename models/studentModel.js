@@ -20,6 +20,15 @@ const studentModel = {
     const studentRef = db.collection('students').doc(id);
     await studentRef.delete();
   },
+  getAllStudents: async () => {
+      const studentsRef = db.collection('students');
+      const studentsSnapshot = await studentsRef.get();
+      const students = [];
+      studentsSnapshot.forEach((doc) => {
+      students.push(doc.data());
+      });
+      return students;
+  }
 };
 
 export default studentModel;

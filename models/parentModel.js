@@ -20,6 +20,14 @@ const parentModel = {
     const parentRef = db.collection('parents').doc(id);
     await parentRef.delete();
   },
+  getAllParents: async () => {
+      const parents = [];
+      const parentsSnapshot = await db.collection('parents').get();
+      parentsSnapshot.forEach((doc) => {
+          parents.push(doc.data());
+      });
+      return parents;
+  }
 };
 
 export default parentModel;

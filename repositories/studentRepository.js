@@ -13,6 +13,9 @@ const studentRepository = {
   deleteStudent: async (id) => {
     await studentModel.deleteStudent(id);
   },
+  getAllStudents: async () => {
+      return await studentModel.getAllStudents();
+  }
 };
 
 export default studentRepository;

@@ -16,4 +16,8 @@ const deleteStudent = async (id) => {
   await studentRepository.deleteStudent(id);
 };
 
-export { getStudentById, createStudent, updateStudent, deleteStudent };
+const getAllStudents = async () => {
+  return await studentRepository.getAllStudents();
+}
+
+export { getStudentById, createStudent, updateStudent, deleteStudent, getAllStudents};

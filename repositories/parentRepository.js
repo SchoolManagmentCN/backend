@@ -13,6 +13,9 @@ const parentRepository = {
   deleteParent: async (id) => {
     await parentModel.deleteParent(id);
   },
+  getAllParents: async () => {
+      return await parentModel.getAllParents();
+  }
 };
 
 export default parentRepository;

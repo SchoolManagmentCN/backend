@@ -13,6 +13,9 @@ const teacherRepository = {
   deleteTeacher: async (id) => {
     await teacherModel.deleteTeacher(id);
   },
+  getAllTeachers: async () => {
+      return await teacherModel.getAllTeachers();
+  }
 };
 
 export default teacherRepository;

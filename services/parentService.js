@@ -16,4 +16,8 @@ const deleteParent = async (id) => {
   await parentRepository.deleteParent(id);
 };
 
-export { getParentById, createParent, updateParent, deleteParent };
+const getAllParents = async () => {
+    return await parentRepository.getAllParents();
+}
+
+export { getParentById, createParent, updateParent, deleteParent, getAllParents };

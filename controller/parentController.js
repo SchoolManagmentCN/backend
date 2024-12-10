@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { getParentById, createParent, updateParent, deleteParent } from '../services/parentService.js';
+import { getParentById, createParent, updateParent, deleteParent, getAllParents } from '../services/parentService.js';
 
 export const getParent = async (req, res) => {
   const { id } = req.params;
@@ -28,3 +28,8 @@ export const removeParent = async (req, res) => {
   await deleteParent(id);
   res.status(204).send();
 };
+
+export const getParents = async (req, res) => {
+    const parents = await getAllParents();
+    res.json(parents);
+}

@@ -1,4 +1,4 @@
-import { getTeacherById, createTeacher, updateTeacher, deleteTeacher } from '../services/teacherService.js';
+import { getTeacherById, createTeacher, updateTeacher, deleteTeacher, getAllTeachers } from '../services/teacherService.js';
 
 export const getTeacher = async (req, res) => {
   const { id } = req.params;
@@ -26,3 +26,8 @@ export const removeTeacher = async (req, res) => {
   await deleteTeacher(id);
   res.status(204).send();
 };
+
+export const getTeachers = async (req, res) => {
+    const teachers = await getAllTeachers();
+    res.json(teachers);
+}
