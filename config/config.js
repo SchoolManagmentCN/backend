@@ -2,11 +2,12 @@ import admin from 'firebase-admin';
 import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-
+import dotenv from "dotenv";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+dotenv.config();
 // Load the service account key
-const serviceAccountPath = join(__dirname, './smbackend-b1502-firebase-adminsdk-qn1y9-d43b919355.json');
+const serviceAccountPath = join(__dirname, './smbackend-b1502-firebase-adminsdk-qn1y9-7d27a90da8.json');
 let serviceAccount;
 try {
     serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8'));
@@ -29,11 +30,11 @@ try {
 }
 
 // Load secret key from environment variables
-const secret = process.env.SECRET_KEY || 'secret';
+const secret = process.env.SECRET_KEY || 'super_secret';
 
 // Configuration object
 const config = {
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8181,
 };
 
 export { db, secret };
